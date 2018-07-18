@@ -238,6 +238,8 @@ def vgg_preprocess(batch):
     batch = torch.cat((b, g, r), dim = 1) # convert RGB to BGR
     batch = (batch + 1) * 255 * 0.5 # [-1, 1] -> [0, 255]
     mean = tensortype(batch.data.size())
+    if batch.is_cuda:
+        mean = mean.cuda()
     mean[:, 0, :, :] = 103.939
     mean[:, 1, :, :] = 116.779
     mean[:, 2, :, :] = 123.680
